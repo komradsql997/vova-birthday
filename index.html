@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Birthday photo puzzle for Vova</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="desktop-warning" aria-hidden="true">
+    <div>
+      <strong>Этот фотоархив сделан для большого экрана.</strong>
+      <span>Открой его на компьютере — так пазл работает как задумано.</span>
+    </div>
+  </div>
+
+  <main id="app" class="app" aria-live="polite">
+    <header class="topbar">
+      <img class="brand brand-left" src="assets/visuals/logo-1.png" alt="Сетка" />
+      <div class="archive-mark" id="archiveMark">VOVA'S PHOTO ARCHIVE</div>
+      <div class="frame-counter" id="frameCounter"></div>
+      <img class="brand brand-right" src="assets/visuals/logo-2.png" alt="Сетка" />
+    </header>
+
+    <div id="decorLayer" class="decor-layer" aria-hidden="true"></div>
+    <section id="screen" class="screen"></section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

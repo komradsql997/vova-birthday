@@ -1,0 +1,436 @@
+:root {
+  --paper: #f4f0e8;
+  --ink: #101010;
+  --muted: #6d6a65;
+  --line: rgba(16,16,16,.72);
+  --blue: #4b20ff;
+  --purple: #6a18ff;
+  --yellow: #f4c629;
+  --panel: rgba(244,240,232,.93);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+button, input { font: inherit; }
+button { color: inherit; }
+
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-width: 1120px;
+  min-height: 680px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 13% 18%, rgba(75,32,255,.035), transparent 24%),
+    radial-gradient(circle at 83% 77%, rgba(244,198,41,.045), transparent 22%),
+    var(--paper);
+}
+
+.topbar {
+  position: absolute;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 76px;
+  display: grid;
+  grid-template-columns: 120px 1fr auto 120px;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 32px 10px;
+  pointer-events: none;
+}
+.topbar::after {
+  content: "";
+  position: absolute;
+  left: 110px;
+  right: 110px;
+  bottom: 0;
+  height: 1px;
+  background: rgba(16,16,16,.48);
+}
+.brand { width: 76px; max-height: 38px; object-fit: contain; filter: none; }
+.brand-left { justify-self: start; background: #111; padding: 6px 8px; }
+.brand-right { justify-self: end; }
+.archive-mark {
+  justify-self: center;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .13em;
+}
+.frame-counter {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  letter-spacing: .08em;
+  min-width: 76px;
+  text-align: right;
+}
+
+.screen {
+  position: absolute;
+  inset: 76px 0 0;
+  z-index: 5;
+}
+
+/* Cover */
+.cover {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(440px, .86fr) minmax(360px, .72fr) minmax(260px, .5fr);
+  gap: clamp(24px, 4vw, 72px);
+  align-items: center;
+  padding: 38px clamp(44px, 6vw, 96px) 42px;
+}
+.cover-copy { align-self: center; position: relative; z-index: 4; }
+.eyebrow {
+  margin: 0 0 24px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.cover h1 {
+  margin: 0;
+  font-size: clamp(60px, 6vw, 104px);
+  line-height: .88;
+  letter-spacing: -.065em;
+  text-transform: uppercase;
+  max-width: 650px;
+}
+.cover h1 .scribble {
+  display: block;
+  margin-top: 16px;
+  color: var(--blue);
+  font-family: "Comic Sans MS", "Bradley Hand", cursive;
+  font-weight: 700;
+  font-size: .48em;
+  line-height: 1;
+  letter-spacing: -.035em;
+  transform: rotate(-2deg);
+}
+.cover-subtitle {
+  margin: 28px 0 26px;
+  max-width: 440px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(13px, 1.15vw, 17px);
+  line-height: 1.45;
+}
+.start-button, .next-button, .restart-button {
+  border: 0;
+  background: none;
+  padding: 8px 0;
+  cursor: pointer;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  border-bottom: 1px solid var(--ink);
+  transition: transform .16s ease, color .16s ease, border-color .16s ease;
+}
+.start-button:hover, .next-button:hover, .restart-button:hover {
+  transform: translateX(4px);
+  color: var(--blue);
+  border-color: var(--blue);
+}
+.start-button { font-size: 16px; }
+.cover-art {
+  position: relative;
+  height: min(70vh, 650px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+.cover-art::before {
+  content: "";
+  position: absolute;
+  width: 76%;
+  height: 88%;
+  border: 1px solid rgba(16,16,16,.7);
+  transform: rotate(2deg);
+}
+.cover-art img {
+  display: block;
+  max-width: 82%;
+  max-height: 92%;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 18px 28px rgba(0,0,0,.08));
+}
+.cover-note {
+  align-self: center;
+  border-left: 1px solid var(--line);
+  padding-left: 28px;
+  max-width: 270px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  z-index: 4;
+}
+.cover-note strong {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--blue);
+  font-family: "Comic Sans MS", "Bradley Hand", cursive;
+  font-size: 22px;
+  line-height: 1.1;
+  transform: rotate(-3deg);
+}
+
+/* Puzzle screen */
+.story-screen {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(720px, 1fr) minmax(300px, 360px);
+  gap: clamp(24px, 3vw, 48px);
+  padding: 26px clamp(36px, 4vw, 70px) 34px;
+}
+.puzzle-side {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 6;
+}
+.puzzle-wrap {
+  width: 100%;
+  max-width: 920px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: clamp(22px, 2.4vw, 40px);
+  align-items: center;
+  justify-content: center;
+}
+.board-column, .tray-column { display: flex; flex-direction: column; align-items: center; }
+.board-kicker, .tray-kicker {
+  width: 100%;
+  margin: 0 0 10px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--muted);
+}
+.board {
+  position: relative;
+  display: grid;
+  border: 1px solid rgba(16,16,16,.75);
+  background: rgba(255,255,255,.16);
+  box-shadow: 0 18px 42px rgba(0,0,0,.07);
+  transition: box-shadow .35s ease, transform .35s ease;
+}
+.board.solved { box-shadow: 0 22px 54px rgba(0,0,0,.12); }
+.board-cell {
+  position: relative;
+  border-right: 1px solid rgba(16,16,16,.13);
+  border-bottom: 1px solid rgba(16,16,16,.13);
+  overflow: hidden;
+  transition: background .15s ease;
+}
+.board-cell.drop-hover { background: rgba(75,32,255,.08); }
+.board-cell.wrong { animation: wrong .24s linear 1; background: rgba(255,75,75,.08); }
+@keyframes wrong { 0%,100%{transform:translateX(0)} 33%{transform:translateX(-3px)} 66%{transform:translateX(3px)} }
+.board.solved .board-cell { border-color: transparent; }
+
+.tray {
+  display: grid;
+  grid-template-columns: repeat(3, var(--tile));
+  grid-auto-rows: var(--tile);
+  gap: 5px;
+  padding: 6px;
+  border: 1px dashed rgba(16,16,16,.35);
+  background: rgba(255,255,255,.12);
+}
+.tray-slot { width: var(--tile); height: var(--tile); position: relative; }
+.tile {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  background: #ddd;
+  box-shadow: 0 4px 9px rgba(0,0,0,.11);
+  transition: transform .16s ease, box-shadow .16s ease, opacity .16s ease;
+}
+.tile:hover { transform: translateY(-2px) rotate(.35deg); box-shadow: 0 8px 15px rgba(0,0,0,.16); }
+.tile.dragging { opacity: .45; cursor: grabbing; }
+.tile.locked { cursor: default; box-shadow: none; }
+.tile.locked:hover { transform: none; }
+.tile img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+.board-foot {
+  margin-top: 12px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.story-panel {
+  position: relative;
+  z-index: 8;
+  border-left: 1px solid rgba(16,16,16,.62);
+  padding: 10px 0 8px 28px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.story-meta {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.lyric-label {
+  color: var(--blue);
+  font-family: "Comic Sans MS", "Bradley Hand", cursive;
+  font-size: 14px;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+  margin-bottom: 8px;
+  opacity: .82;
+}
+.lyric {
+  margin: 0;
+  max-width: 310px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(12px, 1vw, 14px);
+  line-height: 1.55;
+  color: #4b4946;
+}
+.reveal {
+  margin-top: 24px;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .5s ease, transform .5s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.reveal-rule { width: 100%; height: 1px; background: rgba(16,16,16,.58); margin-bottom: 18px; }
+.reveal-title {
+  margin: 0 0 12px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.message-card { margin-bottom: 16px; }
+.message-text {
+  margin: 0;
+  font-size: clamp(13px, 1.04vw, 15px);
+  line-height: 1.43;
+}
+.message-author {
+  display: block;
+  margin-top: 7px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  color: var(--blue);
+}
+.next-button { margin-top: 5px; align-self: flex-start; font-size: 13px; }
+
+/* Floating visuals */
+.decor-layer { position: absolute; inset: 76px 0 0; z-index: 3; pointer-events: none; overflow: hidden; }
+.decor {
+  position: absolute;
+  width: clamp(86px, 8vw, 138px);
+  max-height: 112px;
+  object-fit: contain;
+  opacity: .92;
+  filter: drop-shadow(0 6px 8px rgba(0,0,0,.04));
+}
+.decor.small { width: clamp(58px, 5.5vw, 92px); }
+.doodle {
+  position: absolute;
+  color: var(--blue);
+  font-family: "Comic Sans MS", "Bradley Hand", cursive;
+  font-weight: 700;
+  font-size: clamp(16px, 1.65vw, 25px);
+  letter-spacing: -.04em;
+  opacity: .88;
+  white-space: nowrap;
+}
+.doodle.star { font-size: clamp(28px, 3vw, 46px); }
+
+/* Final */
+.final-screen {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px;
+  position: relative;
+  z-index: 6;
+}
+.final-inner { position: relative; z-index: 5; }
+.final-kicker {
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-size: 12px;
+  margin-bottom: 24px;
+}
+.final-screen h2 {
+  margin: 0;
+  font-size: clamp(76px, 9vw, 150px);
+  line-height: .88;
+  letter-spacing: -.07em;
+  max-width: 1180px;
+}
+.final-screen h2 span { display: block; color: var(--blue); font-family: "Comic Sans MS", "Bradley Hand", cursive; font-size: .52em; letter-spacing: -.04em; margin-top: 18px; transform: rotate(-2deg); }
+.restart-button { margin-top: 34px; font-size: 13px; }
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 30px;
+  border-radius: 3px;
+  background: var(--blue);
+  opacity: .75;
+  animation: float 3.6s ease-in-out infinite alternate;
+}
+.confetti:nth-child(3n){background:var(--yellow)}
+.confetti:nth-child(4n){background:#ff4e80}
+@keyframes float { from { transform: translateY(-7px) rotate(8deg); } to { transform: translateY(9px) rotate(28deg); } }
+
+.desktop-warning { display: none; }
+@media (max-width: 1119px), (max-height: 679px) {
+  .app { display: none; }
+  .desktop-warning {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    padding: 30px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--paper);
+    font-family: "Courier New", Courier, monospace;
+  }
+  .desktop-warning strong, .desktop-warning span { display: block; }
+  .desktop-warning strong { font-size: 20px; margin-bottom: 12px; }
+  .desktop-warning span { color: var(--muted); line-height: 1.5; }
+}
