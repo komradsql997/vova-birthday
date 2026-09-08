@@ -172,7 +172,7 @@ button { color: inherit; }
   justify-content: center;
   padding-top: 14px;
   border-radius: 34px;
-  overflow: hidden;
+  overflow: visible;
 }
 .cover-photo-frame::before {
   content: "";
@@ -191,6 +191,8 @@ button { color: inherit; }
   position: relative;
   z-index: 2;
   border-radius: var(--radius);
+  clip-path: inset(0 round var(--radius));
+  overflow: hidden;
   filter: drop-shadow(0 18px 28px rgba(0,0,0,.09));
   transform: translateY(10px);
 }
