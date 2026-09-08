@@ -171,6 +171,8 @@ button { color: inherit; }
   align-items: center;
   justify-content: center;
   padding-top: 14px;
+  border-radius: 34px;
+  overflow: hidden;
 }
 .cover-photo-frame::before {
   content: "";
