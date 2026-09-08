@@ -3,7 +3,7 @@ const TEST_MODE = true; // Временная тестовая кнопка дл
 const FRAMES = [
   {
     id: 1,
-    image: 'assets/photos/frame-1.webp',
+    image: 'assets/photos/frame-1.webp?v=6',
     orientation: 'portrait',
     lyric: '«I wanna be defined by the things that I love». — Lover',
     messages: [
@@ -15,7 +15,7 @@ const FRAMES = [
   },
   {
     id: 2,
-    image: 'assets/photos/frame-2.webp',
+    image: 'assets/photos/frame-2.webp?v=6',
     orientation: 'portrait',
     lyric: '“I can go anywhere I want.” — the 1',
     messages: [
@@ -25,7 +25,7 @@ const FRAMES = [
   },
   {
     id: 3,
-    image: 'assets/photos/frame-3.webp',
+    image: 'assets/photos/frame-3.webp?v=6',
     orientation: 'portrait',
     lyric: '“I can go anywhere I want.” — the 1',
     messages: [
@@ -34,7 +34,7 @@ const FRAMES = [
   },
   {
     id: 4,
-    image: 'assets/photos/frame-4.webp',
+    image: 'assets/photos/frame-4.webp?v=6',
     orientation: 'portrait',
     lyric: '“Take the moment and taste it.” — You’re On Your Own, Kid',
     messages: [
@@ -43,7 +43,7 @@ const FRAMES = [
   },
   {
     id: 5,
-    image: 'assets/photos/frame-5.webp',
+    image: 'assets/photos/frame-5.webp?v=6',
     orientation: 'portrait',
     lyric: '“Long live the magic we made.” — Long Live',
     messages: [
@@ -52,7 +52,7 @@ const FRAMES = [
   },
   {
     id: 6,
-    image: 'assets/photos/frame-6.webp',
+    image: 'assets/photos/frame-6.webp?v=6',
     orientation: 'portrait',
     lyric: '“I had the time of my life fighting dragons with you.” — Long Live',
     messages: [
@@ -61,7 +61,7 @@ const FRAMES = [
   },
   {
     id: 7,
-    image: 'assets/photos/frame-7.webp',
+    image: 'assets/photos/frame-7.webp?v=6',
     orientation: 'landscape',
     lyric: '“Please don’t ever become a stranger.” — New Year’s Day',
     messages: [
@@ -70,7 +70,7 @@ const FRAMES = [
   },
   {
     id: 8,
-    image: 'assets/photos/frame-8.webp',
+    image: 'assets/photos/frame-8.webp?v=6',
     orientation: 'landscape',
     lyric: '“Hold on to the memories, they will hold on to you.” — New Year’s Day',
     messages: [
@@ -81,10 +81,10 @@ const FRAMES = [
 ];
 
 const EXTRA_VISUALS = [
-  'assets/visuals/extra-camera.png',
-  'assets/visuals/extra-cake.png',
-  'assets/visuals/extra-cat-1.png',
-  'assets/visuals/extra-cat-2.png'
+  'assets/visuals/extra-camera.png?v=6',
+  'assets/visuals/extra-cake.png?v=6',
+  'assets/visuals/extra-cat-1.png?v=6',
+  'assets/visuals/extra-cat-2.png?v=6'
 ];
 
 const STORY_DECOR_SLOTS = [
@@ -129,6 +129,18 @@ function setDecor(mode = 'story') {
   });
 }
 
+function preloadImage(src) {
+  const img = new Image();
+  img.decoding = 'async';
+  img.src = src;
+}
+
+function preloadLater(src) {
+  const run = () => preloadImage(src);
+  if ('requestIdleCallback' in window) requestIdleCallback(run, { timeout: 1800 });
+  else setTimeout(run, 1200);
+}
+
 function coverVisualsHtml() {
   return shuffle(EXTRA_VISUALS).map((src, i) =>
     `<img class="cover-extra cover-extra-${i + 1}" src="${src}" alt="" />`
@@ -151,7 +163,9 @@ function showCover() {
         <p class="cover-teamline">Вове от команды Сетки</p>
         <div class="cover-art">
           <div class="cover-photo-frame">
-            <img class="cover-photo" src="assets/photos/frame-0.webp" alt="Вова" />
+            <div class="cover-photo-clip">
+              <img class="cover-photo" src="assets/photos/frame-0.webp?v=6" alt="Вова" width="640" height="855" fetchpriority="high" decoding="async" />
+            </div>
           </div>
           ${coverVisualsHtml()}
           <span class="cover-confetti confetti-a">✦</span>
@@ -167,7 +181,9 @@ function showCover() {
       </div>
     </div>`;
   document.getElementById('startButton').addEventListener('click', () => showFrame(0));
+  preloadLater(FRAMES[0].image);
 }
+
 
 function getPuzzleLayout(frame) {
   const portrait = frame.orientation === 'portrait';
@@ -227,6 +243,7 @@ function showFrame(index) {
     </div>`;
 
   buildPuzzle(frame, currentLayout);
+  if (index < FRAMES.length - 1) preloadLater(FRAMES[index + 1].image);
   document.getElementById('nextButton').addEventListener('click', () => {
     if (current < FRAMES.length - 1) showFrame(current + 1);
     else showFinal();
