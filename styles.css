@@ -57,16 +57,19 @@ button { color: inherit; }
   background: rgba(16,16,16,.48);
 }
 .brand {
-  width: 76px;
-  height: 44px;
-  max-height: 44px;
+  display: block;
+  width: 82px;
+  height: 46px;
+  max-width: 82px;
+  max-height: 46px;
   object-fit: contain;
+  object-position: center;
   filter: none;
   border-radius: var(--radius);
   overflow: hidden;
 }
 .brand-left { justify-self: start; background: #111; padding: 6px 8px; }
-.brand-right { justify-self: end; }
+.brand-right { justify-self: end; background: #111; padding: 6px 8px; }
 .archive-mark {
   justify-self: center;
   font-family: "Courier New", Courier, monospace;
@@ -167,6 +170,7 @@ button { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 14px;
 }
 .cover-photo-frame::before {
   content: "";
@@ -180,18 +184,23 @@ button { color: inherit; }
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center 18%;
   position: relative;
   z-index: 2;
   border-radius: var(--radius);
   filter: drop-shadow(0 18px 28px rgba(0,0,0,.09));
+  transform: translateY(10px);
 }
 .cover-extra {
   position: absolute;
   z-index: 10;
-  width: clamp(68px, 6.4vw, 104px);
-  max-height: 102px;
+  width: auto;
+  height: auto;
+  max-width: clamp(68px, 6.4vw, 104px);
+  max-height: 86px;
   object-fit: contain;
+  object-position: center;
   opacity: 1;
   border-radius: var(--radius);
   filter: drop-shadow(0 7px 10px rgba(0,0,0,.08));
@@ -447,9 +456,12 @@ button { color: inherit; }
 }
 .decor {
   position: absolute;
-  width: 76px;
-  height: 76px;
+  width: auto;
+  height: auto;
+  max-width: 88px;
+  max-height: 78px;
   object-fit: contain;
+  object-position: center;
   opacity: 1;
   border-radius: var(--radius);
   filter: drop-shadow(0 6px 8px rgba(0,0,0,.06));
