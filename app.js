@@ -1,3 +1,5 @@
+const TEST_MODE = true; // Временная тестовая кнопка для перехода без сборки пазла. Перед продом поменять на false.
+
 const FRAMES = [
   {
     id: 1,
@@ -72,7 +74,8 @@ const FRAMES = [
     orientation: 'landscape',
     lyric: '“Hold on to the memories, they will hold on to you.” — New Year’s Day',
     messages: [
-      { text: '«здесь будет текст от Игоря и Ярика»', author: 'Игорь и Ярик' }
+      { text: 'Уважаемый и дорогой Вова! Желаю тебе всегда нести в себе эту искру задора и хранить пламя любви к окружающим. Ты прекрасный человек и пусть таким и остаешься во веки веков! ❤️ Ну и конечно желаю крепкого и качественного сна, все остальное приложится само собой 🤗', author: 'Ваш Ярик!' },
+      { text: 'дорогой! пусть у тебя будет все самое дорогое и богатое, но для тебя это будет простым в получении. пусть тебя окружает самый лучший свет, чтобы и фото получались и лучезарные идеи проходили. будь богаче во всем. обнимаю!', author: 'Игорь' }
     ]
   }
 ];
@@ -84,16 +87,12 @@ const EXTRA_VISUALS = [
   'assets/visuals/extra-cat-2.png'
 ];
 
-const DECOR_SLOTS = [
-  { x: 1.7, y: 12, r: -8, small: true },
-  { x: 2.7, y: 65, r: 6 },
-  { x: 66, y: 3.5, r: 4, small: true },
-  { x: 67, y: 72, r: -5 },
-  { x: 63, y: 19, r: 7 },
-  { x: 11, y: 76, r: -7 }
+const STORY_DECOR_SLOTS = [
+  { side: 'left', top: 10, r: -8 },
+  { side: 'left', top: 67, r: 6 },
+  { side: 'right', top: 12, r: 7 },
+  { side: 'right', top: 68, r: -6 }
 ];
-
-const DOODLES = ['GOOD IDEAS GROW HERE', '✦', 'HAPPY BIRTHDAY!', '♡', 'BETTER TOGETHER', 'YAY!'];
 
 const app = document.getElementById('app');
 const screen = document.getElementById('screen');
@@ -116,33 +115,24 @@ function shuffle(arr) {
 
 function setDecor(mode = 'story') {
   decorLayer.innerHTML = '';
-  const slots = shuffle(DECOR_SLOTS).slice(0, 4);
+  if (mode !== 'story') return;
+
   const visuals = shuffle(EXTRA_VISUALS);
-  visuals.forEach((src, i) => {
-    const slot = slots[i];
+  STORY_DECOR_SLOTS.forEach((slot, i) => {
     const img = document.createElement('img');
-    img.className = 'decor' + (slot.small ? ' small' : '');
-    img.src = src;
+    img.className = `decor decor-${slot.side}`;
+    img.src = visuals[i];
     img.alt = '';
-    img.style.left = slot.x + '%';
-    img.style.top = slot.y + '%';
-    img.style.transform = `rotate(${slot.r + Math.floor(Math.random()*8-4)}deg)`;
-    if (mode === 'story' && slot.x > 60) img.style.opacity = '.24';
+    img.style.top = slot.top + '%';
+    img.style.transform = `rotate(${slot.r + Math.floor(Math.random() * 5 - 2)}deg)`;
     decorLayer.appendChild(img);
   });
+}
 
-  const doodleSlots = shuffle([
-    {x: 14,y: 8,r:-4}, {x: 76,y: 10,r:5}, {x: 7,y: 42,r:-6}, {x: 80,y: 48,r:3}, {x: 18,y: 84,r:2}
-  ]).slice(0, 2);
-  shuffle(DOODLES).slice(0,2).forEach((text,i)=>{
-    const d=document.createElement('div');
-    d.className='doodle' + (text==='✦' ? ' star' : '');
-    d.textContent=text;
-    d.style.left=doodleSlots[i].x+'%';
-    d.style.top=doodleSlots[i].y+'%';
-    d.style.transform=`rotate(${doodleSlots[i].r}deg)`;
-    decorLayer.appendChild(d);
-  });
+function coverVisualsHtml() {
+  return shuffle(EXTRA_VISUALS).map((src, i) =>
+    `<img class="cover-extra cover-extra-${i + 1}" src="${src}" alt="" />`
+  ).join('');
 }
 
 function showCover() {
@@ -153,17 +143,27 @@ function showCover() {
   screen.innerHTML = `
     <div class="cover">
       <div class="cover-copy">
-        <p class="eyebrow">Вове от команды Сетки</p>
         <h1>VOVA'S<br>PHOTO<br>ARCHIVE <span class="scribble">Birthday photo puzzle</span></h1>
         <p class="cover-subtitle">Некоторые фотографии стоят того, чтобы собрать их заново. Восстанови архив — и открой сообщения от команды.</p>
+      </div>
+
+      <div class="cover-center">
+        <p class="cover-teamline">Вове от команды Сетки</p>
+        <div class="cover-art">
+          <div class="cover-photo-frame">
+            <img class="cover-photo" src="assets/photos/frame-0.webp" alt="Вова" />
+          </div>
+          ${coverVisualsHtml()}
+          <span class="cover-confetti confetti-a">✦</span>
+          <span class="cover-confetti confetti-b">♡</span>
+          <span class="cover-confetti confetti-c">✷</span>
+        </div>
         <button class="start-button" id="startButton">НАЧАТЬ →</button>
       </div>
-      <div class="cover-art">
-        <img src="assets/photos/frame-0.webp" alt="Вова" />
-      </div>
+
       <div class="cover-note">
         <strong>8 photos<br>8 stories<br>1 very good birthday</strong>
-        Сначала собираем фото.<br>Потом появляется поздравление.
+        Нажми «Начать», чтобы увидеть магию
       </div>
     </div>`;
   document.getElementById('startButton').addEventListener('click', () => showFrame(0));
@@ -194,7 +194,7 @@ function showFrame(index) {
   const messagesHtml = frame.messages.map(m => `
     <div class="message-card">
       <p class="message-text">${escapeHtml(m.text).replace(/\n/g,'<br>')}</p>
-      <span class="message-author">— ${escapeHtml(m.author)}</span>
+      ${m.author ? `<span class="message-author">— ${escapeHtml(m.author)}</span>` : ''}
     </div>`).join('');
 
   screen.innerHTML = `
@@ -216,9 +216,10 @@ function showFrame(index) {
         <div class="story-meta">FRAME ${String(frame.id).padStart(2,'0')} · PHOTO ARCHIVE</div>
         <div class="lyric-label">soundtrack note ↘</div>
         <p class="lyric">${escapeHtml(frame.lyric)}</p>
+        ${TEST_MODE ? `<button class="test-next-button" id="testNextButton">ДАЛЬШЕ БЕЗ СБОРКИ →</button>` : ''}
         <div class="reveal" id="reveal">
           <div class="reveal-rule"></div>
-          <p class="reveal-title">после сборки</p>
+          <p class="reveal-title">Что о тебе говорят коллеги</p>
           ${messagesHtml}
           <button class="next-button" id="nextButton">${index === FRAMES.length-1 ? 'ФИНАЛ →' : 'NEXT →'}</button>
         </div>
@@ -230,6 +231,13 @@ function showFrame(index) {
     if (current < FRAMES.length - 1) showFrame(current + 1);
     else showFinal();
   });
+
+  if (TEST_MODE) {
+    document.getElementById('testNextButton').addEventListener('click', () => {
+      if (current < FRAMES.length - 1) showFrame(current + 1);
+      else showFinal();
+    });
+  }
 }
 
 function buildPuzzle(frame, layout) {
@@ -304,6 +312,8 @@ function completePuzzle() {
   const board = document.getElementById('board');
   board.classList.add('solved');
   document.getElementById('reveal').classList.add('visible');
+  const testNextButton = document.getElementById('testNextButton');
+  if (testNextButton) testNextButton.style.display = 'none';
   document.querySelector('.tray-column').style.opacity = '.18';
   document.querySelector('.tray-column').style.transition = 'opacity .5s ease';
   setTimeout(() => {
