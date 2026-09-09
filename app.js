@@ -1,9 +1,7 @@
-const TEST_MODE = true; // Временная тестовая кнопка для перехода без сборки пазла. Перед продом поменять на false.
-
 const FRAMES = [
   {
     id: 1,
-    image: 'assets/photos/frame-1.webp?v=6',
+    image: 'assets/photos/frame-1.webp?v=20',
     orientation: 'portrait',
     lyric: '«I wanna be defined by the things that I love». — Lover',
     messages: [
@@ -15,7 +13,7 @@ const FRAMES = [
   },
   {
     id: 2,
-    image: 'assets/photos/frame-2.webp?v=6',
+    image: 'assets/photos/frame-2.webp?v=20',
     orientation: 'portrait',
     lyric: '“I can go anywhere I want.” — the 1',
     messages: [
@@ -25,16 +23,16 @@ const FRAMES = [
   },
   {
     id: 3,
-    image: 'assets/photos/frame-3.webp?v=6',
+    image: 'assets/photos/frame-3.webp?v=20',
     orientation: 'portrait',
     lyric: '“I can go anywhere I want.” — the 1',
     messages: [
-      { text: '«Вова не только гуру текстов и креативов, но и человек, который всегда несёт вайб и настроение!\n\nПс: поняла, что попала в нужную команду, когда услышала этот сладкий мат!»', author: 'Маша' }
+      { text: '«Вова не только гуру текстов и креативов, но и человек, который всегда несёт вайб и настроение!\n\nПс: поняла, что попала в нужную команду, когда услышала этот сладкий мат!»', author: 'Маша Оборина' }
     ]
   },
   {
     id: 4,
-    image: 'assets/photos/frame-4.webp?v=6',
+    image: 'assets/photos/frame-4.webp?v=20',
     orientation: 'portrait',
     lyric: '“Take the moment and taste it.” — You’re On Your Own, Kid',
     messages: [
@@ -43,25 +41,25 @@ const FRAMES = [
   },
   {
     id: 5,
-    image: 'assets/photos/frame-5.webp?v=6',
+    image: 'assets/photos/frame-5.webp?v=20',
     orientation: 'portrait',
     lyric: '“Long live the magic we made.” — Long Live',
     messages: [
-      { text: '«Спасибо Вове за удивительный талант одновременно вести созвон, придумывать классные идеи и опрыскивать цветочки. Так выглядит человек, который умеет делиться добром со всеми»', author: 'Саша' }
+      { text: '«Спасибо Вове за удивительный талант одновременно вести созвон, придумывать классные идеи и опрыскивать цветочки. Так выглядит человек, который умеет делиться добром со всеми»', author: 'Саша Зверев' }
     ]
   },
   {
     id: 6,
-    image: 'assets/photos/frame-6.webp?v=6',
+    image: 'assets/photos/frame-6.webp?v=20',
     orientation: 'portrait',
     lyric: '“I had the time of my life fighting dragons with you.” — Long Live',
     messages: [
-      { text: '«Вова, ты мой бести примерно с первой встречи в зуме. заботливый друг, внимательный и справедливый руководитель. рядом с тобой я чувствую себя цветочком, который поставили на правильный подоконник: и света хватает, и хочется расти»', author: 'Арина' }
+      { text: '«Вова, ты мой бести примерно с первой встречи в зуме. заботливый друг, внимательный и справедливый руководитель. рядом с тобой я чувствую себя цветочком, который поставили на правильный подоконник: и света хватает, и хочется расти»', author: 'Арина Лукина' }
     ]
   },
   {
     id: 7,
-    image: 'assets/photos/frame-7.webp?v=6',
+    image: 'assets/photos/frame-7.webp?v=20',
     orientation: 'landscape',
     lyric: '“Please don’t ever become a stranger.” — New Year’s Day',
     messages: [
@@ -70,21 +68,21 @@ const FRAMES = [
   },
   {
     id: 8,
-    image: 'assets/photos/frame-8.webp?v=6',
+    image: 'assets/photos/frame-8.webp?v=20',
     orientation: 'landscape',
     lyric: '“Hold on to the memories, they will hold on to you.” — New Year’s Day',
     messages: [
-      { text: 'Уважаемый и дорогой Вова! Желаю тебе всегда нести в себе эту искру задора и хранить пламя любви к окружающим. Ты прекрасный человек и пусть таким и остаешься во веки веков! ❤️ Ну и конечно желаю крепкого и качественного сна, все остальное приложится само собой 🤗', author: 'Ваш Ярик!' },
-      { text: 'дорогой! пусть у тебя будет все самое дорогое и богатое, но для тебя это будет простым в получении. пусть тебя окружает самый лучший свет, чтобы и фото получались и лучезарные идеи проходили. будь богаче во всем. обнимаю!', author: 'Игорь' }
+      { text: 'Уважаемый и дорогой Вова! Желаю тебе всегда нести в себе эту искру задора и хранить пламя любви к окружающим. Ты прекрасный человек и пусть таким и остаешься во веки веков! ❤️ Ну и конечно желаю крепкого и качественного сна, все остальное приложится само собой 🤗', author: 'Ваш Ярик' },
+      { text: 'дорогой! пусть у тебя будет все самое дорогое и богатое, но для тебя это будет простым в получении. пусть тебя окружает самый лучший свет, чтобы и фото получались и лучезарные идеи проходили. будь богаче во всем. обнимаю!', author: 'Игорь Иванов' }
     ]
   }
 ];
 
 const EXTRA_VISUALS = [
-  'assets/visuals/extra-camera.png?v=6',
-  'assets/visuals/extra-cake.png?v=6',
-  'assets/visuals/extra-cat-1.png?v=6',
-  'assets/visuals/extra-cat-2.png?v=6'
+  'assets/visuals/extra-camera.png?v=20',
+  'assets/visuals/extra-cake.png?v=20',
+  'assets/visuals/extra-cat-1.png?v=20',
+  'assets/visuals/extra-cat-2.png?v=20'
 ];
 
 const STORY_DECOR_SLOTS = [
@@ -155,16 +153,16 @@ function showCover() {
   screen.innerHTML = `
     <div class="cover">
       <div class="cover-copy">
-        <h1>VOVA'S<br>PHOTO<br>ARCHIVE <span class="scribble">Birthday photo puzzle</span></h1>
-        <p class="cover-subtitle">Некоторые фотографии стоят того, чтобы собрать их заново. Восстанови архив — и открой сообщения от команды.</p>
+        <h1>BIRTHDAY<br>PHOTO<br>PUZZLE <span class="scribble">Вове от команды Сетки</span></h1>
+        <p class="cover-subtitle">Некоторые фотографии стоит собрать заново. Собирай их по кусочкам и открывай поздравления.</p>
       </div>
 
       <div class="cover-center">
-        <p class="cover-teamline">Вове от команды Сетки</p>
+        <p class="cover-teamline">Тупо лучший</p>
         <div class="cover-art">
           <div class="cover-photo-frame">
             <div class="cover-photo-clip">
-              <img class="cover-photo" src="assets/photos/frame-0.webp?v=6" alt="Вова" width="640" height="855" fetchpriority="high" decoding="async" />
+              <img class="cover-photo" src="assets/photos/frame-0.webp?v=20" alt="Вова" width="640" height="855" fetchpriority="high" decoding="async" />
             </div>
           </div>
           ${coverVisualsHtml()}
@@ -190,11 +188,24 @@ function getPuzzleLayout(frame) {
   const cols = portrait ? 3 : 4;
   const rows = portrait ? 4 : 3;
   const viewportH = Math.max(680, window.innerHeight);
-  const available = viewportH - 210;
-  let tile;
-  if (portrait) tile = Math.max(82, Math.min(116, Math.floor(available / 4.25)));
-  else tile = Math.max(88, Math.min(122, Math.floor(available / 4.05)));
-  return { cols, rows, tile, boardW: cols*tile, boardH: rows*tile };
+  const viewportW = Math.max(1280, window.innerWidth);
+  const availableH = viewportH - 210;
+
+  const sidePadding = viewportW < 1500 ? 84 : 100;
+  const panelWidth = viewportW < 1500 ? 410 : 450;
+  const storyGap = 34;
+  const leftAvailable = viewportW - (sidePadding * 2) - panelWidth - storyGap;
+  const widthDivisor = cols + 3; // board columns + 3-column tray
+  const widthCap = Math.floor((leftAvailable - 32) / widthDivisor);
+
+  let heightCap;
+  if (portrait) heightCap = Math.floor(availableH / 4.25);
+  else heightCap = Math.floor(availableH / 4.05);
+
+  const maxTile = portrait ? 116 : 122;
+  const minTile = portrait ? 82 : 88;
+  const tile = Math.max(minTile, Math.min(maxTile, heightCap, widthCap));
+  return { cols, rows, tile, boardW: cols * tile, boardH: rows * tile };
 }
 
 function showFrame(index) {
@@ -230,13 +241,16 @@ function showFrame(index) {
       </div>
       <aside class="story-panel">
         <div class="story-meta">FRAME ${String(frame.id).padStart(2,'0')} · PHOTO ARCHIVE</div>
-        <div class="lyric-label">soundtrack note ↘</div>
-        <p class="lyric">${escapeHtml(frame.lyric)}</p>
-        ${TEST_MODE ? `<button class="test-next-button" id="testNextButton">ДАЛЬШЕ БЕЗ СБОРКИ →</button>` : ''}
+        <div class="lyric-block">
+          <div class="lyric-label">soundtrack note ↘</div>
+          <p class="lyric">${escapeHtml(frame.lyric)}</p>
+        </div>
         <div class="reveal" id="reveal">
           <div class="reveal-rule"></div>
-          <p class="reveal-title">Что о тебе говорят коллеги</p>
-          ${messagesHtml}
+          <div class="reveal-content">
+            <p class="reveal-title">Что о тебе говорят коллеги</p>
+            <div class="messages-wrap">${messagesHtml}</div>
+          </div>
           <button class="next-button" id="nextButton">${index === FRAMES.length-1 ? 'ФИНАЛ →' : 'NEXT →'}</button>
         </div>
       </aside>
@@ -248,13 +262,6 @@ function showFrame(index) {
     if (current < FRAMES.length - 1) showFrame(current + 1);
     else showFinal();
   });
-
-  if (TEST_MODE) {
-    document.getElementById('testNextButton').addEventListener('click', () => {
-      if (current < FRAMES.length - 1) showFrame(current + 1);
-      else showFinal();
-    });
-  }
 }
 
 function buildPuzzle(frame, layout) {
@@ -329,8 +336,6 @@ function completePuzzle() {
   const board = document.getElementById('board');
   board.classList.add('solved');
   document.getElementById('reveal').classList.add('visible');
-  const testNextButton = document.getElementById('testNextButton');
-  if (testNextButton) testNextButton.style.display = 'none';
   document.querySelector('.tray-column').style.opacity = '.18';
   document.querySelector('.tray-column').style.transition = 'opacity .5s ease';
   setTimeout(() => {
@@ -350,6 +355,7 @@ function showFinal() {
         <h2>Вова,<br>с днём рождения!<span>better together ♡</span></h2>
         <button class="restart-button" id="restartButton">СОБРАТЬ ЕЩЁ РАЗ ↺</button>
       </div>
+      <p class="final-bank-note">А теперь проверь банковский счёт</p>
       ${Array.from({length:16},(_,i)=>`<i class="confetti" style="left:${4+(i*6)%93}%;top:${8+(i*13)%78}%;transform:rotate(${i*23}deg);animation-delay:${(i%6)*.22}s"></i>`).join('')}
     </div>`;
   document.getElementById('restartButton').addEventListener('click', showCover);
